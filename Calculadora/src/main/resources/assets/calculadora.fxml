@@ -44,57 +44,57 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="num7" mnemonicParsing="false" text="7">
+                  <Button fx:id="num7" mnemonicParsing="false" onAction="#actionNums" text="7">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="num8" mnemonicParsing="false" text="8">
+                  <Button fx:id="num8" mnemonicParsing="false" onAction="#actionNums" text="8">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="num9" mnemonicParsing="false" text="9" />
+                  <Button fx:id="num9" mnemonicParsing="false" onAction="#actionNums" text="9" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="num4" mnemonicParsing="false" text="4">
+                  <Button fx:id="num4" mnemonicParsing="false" onAction="#actionNums" text="4">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="num5" mnemonicParsing="false" text="5">
+                  <Button fx:id="num5" mnemonicParsing="false" onAction="#actionNums" text="5">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="num6" mnemonicParsing="false" text="6" />
+                  <Button fx:id="num6" mnemonicParsing="false" onAction="#actionNums" text="6" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="num1" mnemonicParsing="false" text="1">
+                  <Button fx:id="num1" mnemonicParsing="false" onAction="#actionNums" text="1">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="num2" mnemonicParsing="false" text="2">
+                  <Button fx:id="num2" mnemonicParsing="false" onAction="#actionNums" text="2">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="num3" mnemonicParsing="false" text="3" />
+                  <Button fx:id="num3" mnemonicParsing="false" onAction="#actionNums" text="3" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="num0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="0">
+                  <Button fx:id="num0" mnemonicParsing="false" onAction="#actionNums" prefHeight="26.0" prefWidth="76.0" text="0">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="dot" mnemonicParsing="false" text="." />
+                  <Button fx:id="dot" mnemonicParsing="false" onAction="#actionNums" text="." />
                </children>
             </HBox>
          </children>
