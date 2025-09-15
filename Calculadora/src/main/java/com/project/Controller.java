@@ -8,28 +8,20 @@ import javafx.event.ActionEvent;
 public class Controller {
 
     @FXML
-    private Button buttonAdd;
-    private Button buttonRest;
-    private Button buttonMulti;
-    private Button buttonDiv;
-    private Button buttonResult;
+    private Button buttonAdd, buttonRest, buttonMulti, buttonDiv, buttonResult;
 
     @FXML
-    private Button num9;
-    private Button num8;
-    private Button num7;
-    private Button num6;
-    private Button num5;
-    private Button num4;
-    private Button num3;
-    private Button num2;
-    private Button num1;
-    private Button num0;
+    private Button num9, num8, num7, num6, num5, num4, num3, num2, num1, num0, dot;
 
     @FXML
     private Text textCounter;
 
-    private String aux;
+    private StringBuilder input = new StringBuilder();
+
+    @FXML
+    private void actionNums(ActionEvent event) {
+        
+    }
 
     @FXML
     private void actionAdd(ActionEvent event) {
