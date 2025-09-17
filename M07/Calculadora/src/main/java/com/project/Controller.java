@@ -20,7 +20,7 @@ public class Controller {
 
     @FXML
     private void actionNums(ActionEvent event) {
-        
+        input = num9.getText();
     }
 
     @FXML
