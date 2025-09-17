@@ -1,5 +1,7 @@
 package com.project;
 
+import java.io.File;
+
 public class PR111Files {
 
     public static void main(String[] args) {
@@ -8,5 +10,7 @@ public class PR111Files {
     }
 
     public static void gestionarArxius(String camiFitxer) {
+        File f = new File(camiFitxer);
+        
     }
 }

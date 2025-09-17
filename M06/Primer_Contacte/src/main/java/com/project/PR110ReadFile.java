@@ -1,7 +1,8 @@
 package com.project;
 
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
 public class PR110ReadFile {
 
@@ -12,14 +13,14 @@ public class PR110ReadFile {
 
     // Funció que llegeix el fitxer i mostra les línies amb numeració
     public static void llegirIMostrarFitxer(String camiFitxer) {
-        try {
-            FileReader fr = new FileReader(camiFitxer);
-            int c;
-            while ((c = fr.read()) != -1) {
-                System.out.print((char) c);
+        try (BufferedReader br = new BufferedReader(new FileReader(camiFitxer))) {
+            String line;
+            int num = 1;
+            while ((line = br.readLine()) != null) {
+                System.out.println(num+ ": " +line); 
+                num++;
             }
-            fr.close();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
