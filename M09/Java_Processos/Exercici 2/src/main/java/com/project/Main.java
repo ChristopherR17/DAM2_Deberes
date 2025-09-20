@@ -1,3 +1,5 @@
+package com.project;
+
 import java.util.concurrent.CompletableFuture;
 
 public class Main {
