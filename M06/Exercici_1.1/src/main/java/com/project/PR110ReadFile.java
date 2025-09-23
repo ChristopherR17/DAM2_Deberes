@@ -3,6 +3,8 @@ package com.project;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.File;
+
 
 public class PR110ReadFile {
 
@@ -13,15 +15,23 @@ public class PR110ReadFile {
 
     // Funció que llegeix el fitxer i mostra les línies amb numeració
     public static void llegirIMostrarFitxer(String camiFitxer) {
-        try (BufferedReader br = new BufferedReader(new FileReader(camiFitxer))) {
-            String line;
-            int num = 1;
-            while ((line = br.readLine()) != null) {
-                System.out.println(num+ ": " +line); 
-                num++;
+        File fitxer = new File(camiFitxer);
+
+        if (!fitxer.exists()) {
+            System.err.println("El fitxer no existeix: " + camiFitxer);
+            return;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(fitxer))) {
+            String linia;
+            int numeroLinia = 1;
+
+            while ((linia = br.readLine()) != null) {
+                System.out.println(numeroLinia + ": " + linia);
+                numeroLinia++;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error llegint el fitxer: " + e.getMessage());
         }
     }
 }
