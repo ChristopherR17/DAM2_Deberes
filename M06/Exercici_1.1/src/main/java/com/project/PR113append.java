@@ -12,5 +12,14 @@ public class PR113append {
 
     // Mètode que afegeix les frases al fitxer amb UTF-8 i línia en blanc final
     public static void afegirFrases(String camiFitxer) {
+        try (java.io.OutputStreamWriter writer = new java.io.OutputStreamWriter(
+                new java.io.FileOutputStream(camiFitxer, true), java.nio.charset.StandardCharsets.UTF_8)) {
+            writer.write("I can only show you the door\n");
+            writer.write("You're the one that has to walk through it\n");
+            writer.write("\n");
+            writer.flush();
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 }
