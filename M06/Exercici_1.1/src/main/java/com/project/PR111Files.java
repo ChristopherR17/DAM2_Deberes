@@ -13,32 +13,31 @@ public class PR111Files {
     }
 
     public static void gestionarArxius(String camiFitxer) {
-        // Path directory = Path.of(camiFitxer);
-        // try {
-        //     Files.createDirectories(directory);
+        Path directory = Path.of(camiFitxer);
+        try {
+            // Crear el directorio si no existe
+            Files.createDirectories(directory);
 
-        //     Path file1 = directory.resolve("file1.txt");
-        //     Path file2 = directory.resolve("file2.txt");
+            // Crear subcarpeta 'myFiles' dentro del directorio dado
+            Path carpeta = directory.resolve("myFiles");
+            Files.createDirectories(carpeta);
 
-        //     Path renamedFile = directory.resolve("renamedFile.txt");
-        //     Files.move(file2, renamedFile);
+            // Crear file1.txt y file2.txt dentro de 'myFiles'
+            Path file1 = carpeta.resolve("file1.txt");
+            Path file2 = carpeta.resolve("file2.txt");
+            Files.createFile(file1);
+            Files.createFile(file2);
 
-        //     System.out.println("Els arxius de la carpeta són: ");
-        //     DirectoryStream<Path> stream = Files.newDirectoryStream(directory);
-        //     for (Path path : stream) {
-        //         System.out.println(path.getFileName());
-        //     }
+            // Renombrar file2.txt a renamedFile.txt
+            Path renamedFile = carpeta.resolve("renamedFile.txt");
+            Files.move(file2, renamedFile);
 
-        //     Files.deleteIfExists(file1);
+            // Eliminar file1.txt
+            Files.deleteIfExists(file1);
 
-        //     System.out.println("Els arxius de la carpeta són: ");
-        //     DirectoryStream<Path> stream = Files.newDirectoryStream(directory);
-        //     for (Path path : stream) {
-        //         System.out.println(path.getFileName());
-        //     }  
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        // }
-        
+            // Al final, solo debe quedar renamedFile.txt en la carpeta
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

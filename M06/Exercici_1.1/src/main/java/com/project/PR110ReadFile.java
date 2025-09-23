@@ -23,7 +23,7 @@ public class PR110ReadFile {
                 numeroLinia++;
             }
         } catch (IOException e) {
-            // No imprimir nada extra, el test no espera errores por pantalla
+            System.err.println("Error llegint el fitxer: " + e.getMessage());
         }
     }
 }
