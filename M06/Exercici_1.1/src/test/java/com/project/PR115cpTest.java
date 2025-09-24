@@ -28,9 +28,9 @@ class PR115cpTest {
         // Escriure contingut al fitxer d'origen, incloent línies en blanc
         List<String> contingutOrigen = new ArrayList<>();
         contingutOrigen.add("Primera línia");
-        contingutOrigen.add(""); // Línia en blanc
+        contingutOrigen.add(""); 
         contingutOrigen.add("Segona línia");
-        contingutOrigen.add(""); // Línia en blanc
+        contingutOrigen.add(""); 
         contingutOrigen.add("Tercera línia");
 
         Files.write(fitxerOrigen.toPath(), contingutOrigen, StandardCharsets.UTF_8);
@@ -64,9 +64,9 @@ class PR115cpTest {
         // Escriure contingut al fitxer d'origen, incloent línies en blanc i una línia en blanc al final
         List<String> contingutOrigen = new ArrayList<>();
         contingutOrigen.add("Primera línia");
-        contingutOrigen.add(""); // Línia en blanc
+        contingutOrigen.add(""); 
         contingutOrigen.add("Segona línia");
-        contingutOrigen.add(""); // Línia en blanc
+        contingutOrigen.add(""); 
         contingutOrigen.add("Tercera línia");
     
         // Aquesta línia en blanc no serà detectada amb BufferedReader.readLine() perquè és l'última
