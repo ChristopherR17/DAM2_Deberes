@@ -19,8 +19,16 @@ public class PR121mainLlegeix {
     }
 
     public static PR121hashmap deserialitzarHashMap() throws IOFitxerExcepcio {
-        // *************** CODI PRÀCTICA **********************/
-        return new PR121hashmap(); // Substitueix pel teu
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+            Object obj = ois.readObject();
+            if (obj instanceof PR121hashmap) {
+                return (PR121hashmap) obj;
+            } else {
+                throw new IOFitxerExcepcio("Error en deserialitzar l'objecte HashMap: L'objecte no és del tipus esperat");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            throw new IOFitxerExcepcio("Error en deserialitzar l'objecte HashMap: " + e.getMessage(), e);
+        }
     }
 
     // Getter

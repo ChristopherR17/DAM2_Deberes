@@ -58,7 +58,10 @@ public class PR123mainTreballadors {
 
     // Mètode per mostrar els treballadors llegint el fitxer CSV
     public void mostrarTreballadors() throws IOFitxerExcepcio {
-        // *************** CODI PRÀCTICA **********************/
+        List<String> treballadorsCSV = llegirFitxerCSV();
+        for (String linia : treballadorsCSV) {
+            System.out.println(linia);
+        }
     }
 
     // Mètode per modificar un treballador (interactiu)
@@ -81,7 +84,36 @@ public class PR123mainTreballadors {
 
     // Mètode que modifica treballador (per a tests i usuaris) llegint i escrivint sobre disc
     public void modificarTreballador(String id, String columna, String nouValor) throws IOFitxerExcepcio {
-        // *************** CODI PRÀCTICA **********************/
+        List<String> treballadorsCSV = llegirFitxerCSV();
+        // Buscar número de línea del trabajador
+        int numLinia = UtilsCSV.obtenirNumLinia(treballadorsCSV, "Id", id);
+        if (numLinia == -1) {
+            throw new IOFitxerExcepcio("No s'ha trobat el treballador amb Id: " + id);
+        }
+        // Obtener array de cabeceras y buscar el índice de la columna
+        String[] capcalera = UtilsCSV.obtenirArrayLinia(treballadorsCSV.get(0));
+        int idxCol = -1;
+        for (int i = 0; i < capcalera.length; i++) {
+            if (capcalera[i].equalsIgnoreCase(columna)) {
+                idxCol = i;
+                break;
+            }
+        }
+        if (idxCol == -1) {
+            throw new IOFitxerExcepcio("Columna no vàlida: " + columna);
+        }
+        // Modificar el valor
+        String[] dades = UtilsCSV.obtenirArrayLinia(treballadorsCSV.get(numLinia));
+        dades[idxCol] = nouValor;
+        // Reconstruir la línia modificada
+        StringBuilder novaLinia = new StringBuilder();
+        for (int i = 0; i < dades.length; i++) {
+            novaLinia.append(dades[i]);
+            if (i < dades.length - 1) novaLinia.append(",");
+        }
+        treballadorsCSV.set(numLinia, novaLinia.toString());
+        // Guardar el fitxer
+        escriureFitxerCSV(treballadorsCSV);
     }
 
     // Encapsulació de llegir el fitxer CSV

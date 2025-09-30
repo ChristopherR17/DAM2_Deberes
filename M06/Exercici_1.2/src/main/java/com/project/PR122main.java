@@ -26,13 +26,34 @@ public class PR122main {
 
     // Mètode per serialitzar la llista de persones
     public static void serialitzarPersones(List<PR122persona> persones) throws IOFitxerExcepcio {
-        // *************** CODI PRÀCTICA **********************/
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            oos.writeObject(persones);
+        } catch (IOException e) {
+            throw new IOFitxerExcepcio("Error en serialitzar la llista de persones: " + e.getMessage(), e);
+        }
     }
 
     // Mètode per deserialitzar la llista de persones
     public static List<PR122persona> deserialitzarPersones() throws IOFitxerExcepcio {
-        // *************** CODI PRÀCTICA **********************/
-        return new ArrayList(); // Substitueix pel teu
+        File fitxer = new File(filePath);
+        if (!fitxer.exists()) {
+            throw new IOFitxerExcepcio("Fitxer no trobat: " + filePath);
+        }
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
+            Object obj = ois.readObject();
+            if (obj instanceof List) {
+                // Comprova que la llista conté PR122persona
+                List<?> llista = (List<?>) obj;
+                if (llista.isEmpty() || llista.get(0) instanceof PR122persona) {
+                    @SuppressWarnings("unchecked")
+                    List<PR122persona> persones = (List<PR122persona>) llista;
+                    return persones;
+                }
+            }
+            throw new IOFitxerExcepcio("Error en deserialitzar la llista de persones: L'objecte no és del tipus esperat");
+        } catch (IOException | ClassNotFoundException e) {
+            throw new IOFitxerExcepcio("Error en deserialitzar la llista de persones: " + e.getMessage(), e);
+        }
     }
 
 
