@@ -53,8 +53,8 @@ public class PR130Main {
         Document doc = parseXML(inputFile);
         if (doc != null) {
             NodeList persones = doc.getElementsByTagName("persona");
-            // imprimirCapçaleres();
-            // imprimirDadesPersones(persones);
+            imprimirCapçaleres();
+            imprimirDadesPersones(persones);
         }
     }
 
@@ -66,6 +66,37 @@ public class PR130Main {
      */
     public static Document parseXML(File inputFile) {
         // *************** CODI PRÀCTICA **********************/
-        return null; // Substitueix pel teu        
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            return dBuilder.parse(inputFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;    
+    }
+
+    public void imprimirCapçaleres(){
+        System.out.println("Nom      Cognom    Edat    Ciutat");
+    }
+
+    public void imprimirDadesPersones(NodeList persones){
+        for (int i = 0; i < persones.getLength(); i++) {
+            Element persona = (Element) persones.item(i);
+            String nom = getTagValue("nom", persona);
+            String cognom = getTagValue("cognom", persona);
+            String edat = getTagValue("edat", persona);
+            String ciutat = getTagValue("ciutat", persona);
+            // Ajustar los anchos para que coincidan con la tabla de ejemplo
+            System.out.printf("%-8s %-9s %-7s %-10s\n", nom, cognom, edat, ciutat);
+        }
+    }
+
+    private static String getTagValue(String tag, Element element) {
+        NodeList nodeList = element.getElementsByTagName(tag);
+        if (nodeList != null && nodeList.getLength() > 0) {
+            return nodeList.item(0).getTextContent();
+        }
+        return "";
     }
 }
