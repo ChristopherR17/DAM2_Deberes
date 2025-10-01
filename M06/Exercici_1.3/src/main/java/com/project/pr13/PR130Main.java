@@ -77,26 +77,19 @@ public class PR130Main {
     }
 
     public void imprimirCapçaleres(){
-        System.out.println("Nom      Cognom    Edat    Ciutat");
+        System.out.println("Nom      Cognom        Edat  Ciutat\n-------- -------------- ----- ---------");
     }
 
     public void imprimirDadesPersones(NodeList persones){
         for (int i = 0; i < persones.getLength(); i++) {
             Element persona = (Element) persones.item(i);
-            String nom = getTagValue("nom", persona);
-            String cognom = getTagValue("cognom", persona);
-            String edat = getTagValue("edat", persona);
-            String ciutat = getTagValue("ciutat", persona);
+            String nom = persona.getElementsByTagName("nom").item(0).getTextContent();
+            String cognom = persona.getElementsByTagName("cognom").item(0).getTextContent();
+            String edat = persona.getElementsByTagName("edat").item(0).getTextContent();
+            String ciutat = persona.getElementsByTagName("ciutat").item(0).getTextContent();
             // Ajustar los anchos para que coincidan con la tabla de ejemplo
             System.out.printf("%-8s %-9s %-7s %-10s\n", nom, cognom, edat, ciutat);
         }
     }
 
-    private static String getTagValue(String tag, Element element) {
-        NodeList nodeList = element.getElementsByTagName(tag);
-        if (nodeList != null && nodeList.getLength() > 0) {
-            return nodeList.item(0).getTextContent();
-        }
-        return "";
-    }
 }
