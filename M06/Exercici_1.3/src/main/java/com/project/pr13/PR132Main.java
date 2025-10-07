@@ -138,8 +138,34 @@ public class PR132Main {
      * @return Llista amb la informació dels cursos (ID, tutor, nombre d'alumnes).
      */
     public List<List<String>> llistarCursos() {
-        // *************** CODI PRÀCTICA **********************/
-        return null; // Substitueix pel teu
+        List<List<String>> result = new ArrayList<>();
+        Document doc = carregarDocumentXML(xmlFilePath);
+        NodeList cursNodes = doc.getElementsByTagName("curs");
+
+        for (int i = 0; i < cursNodes.getLength(); i++) {
+            Element curs = (Element) cursNodes.item(i);
+            String id = curs.getAttribute("id");
+            String tutor = "";
+            NodeList tutorNodes = curs.getElementsByTagName("tutor");
+
+            if (tutorNodes.getLength() > 0) {
+                tutor = tutorNodes.item(0).getTextContent();
+            }
+            int totalAlumnes = 0;
+            NodeList alumnesNodes = curs.getElementsByTagName("alumnes");
+
+            if (alumnesNodes.getLength() > 0) {
+                Element alumnesEl = (Element) alumnesNodes.item(0);
+                totalAlumnes = alumnesEl.getElementsByTagName("alumne").getLength();
+            }
+
+            List<String> row = new ArrayList<>();
+            row.add(id);
+            row.add(tutor);
+            row.add(String.valueOf(totalAlumnes));
+            result.add(row);
+        }
+        return result;
     }
 
     /**
@@ -159,8 +185,35 @@ public class PR132Main {
      * @return Llista amb la informació dels mòduls (ID, títol).
      */
     public List<List<String>> mostrarModuls(String idCurs) {
-        // *************** CODI PRÀCTICA **********************/
-        return null; // Substitueix pel teu
+        List<List<String>> result = new ArrayList<>();
+        Document doc = carregarDocumentXML(xmlFilePath);
+        NodeList cursNodes = doc.getElementsByTagName("curs");
+
+        for (int i = 0; i < cursNodes.getLength(); i++) {
+            Element curs = (Element) cursNodes.item(i);
+
+            if (idCurs.equals(curs.getAttribute("id"))) {
+                NodeList modulsNodes = curs.getElementsByTagName("modul");
+
+                for (int j = 0; j < modulsNodes.getLength(); j++) {
+                    Element modul = (Element) modulsNodes.item(j);
+                    String id = modul.getAttribute("id");
+                    String titol = "";
+                    NodeList titolNodes = modul.getElementsByTagName("titol");
+
+                    if (titolNodes.getLength() > 0) {
+                        titol = titolNodes.item(0).getTextContent();
+                    }
+
+                    List<String> row = new ArrayList<>();
+                    row.add(id);
+                    row.add(titol);
+                    result.add(row);
+                }
+                break;
+            }
+        }
+        return result;
     }
 
     /**
@@ -180,8 +233,28 @@ public class PR132Main {
      * @return Llista amb els noms dels alumnes.
      */
     public List<String> llistarAlumnes(String idCurs) {
-        // *************** CODI PRÀCTICA **********************/
-        return null; // Substitueix pel teu
+        List<String> result = new ArrayList<>();
+        Document doc = carregarDocumentXML(xmlFilePath);
+        NodeList cursNodes = doc.getElementsByTagName("curs");
+
+        for (int i = 0; i < cursNodes.getLength(); i++) {
+            Element curs = (Element) cursNodes.item(i);
+
+            if (idCurs.equals(curs.getAttribute("id"))) {
+                NodeList alumnesContainers = curs.getElementsByTagName("alumnes");
+
+                if (alumnesContainers.getLength() > 0) {
+                    Element alumnesEl = (Element) alumnesContainers.item(0);
+                    NodeList alumneNodes = alumnesEl.getElementsByTagName("alumne");
+
+                    for (int j = 0; j < alumneNodes.getLength(); j++) {
+                        result.add(alumneNodes.item(j).getTextContent());
+                    }
+                }
+                break;
+            }
+        }
+        return result;
     }
 
     /**
@@ -201,7 +274,31 @@ public class PR132Main {
      * @param nomAlumne Nom de l'alumne a afegir.
      */
     public void afegirAlumne(String idCurs, String nomAlumne) {
-        // *************** CODI PRÀCTICA **********************/
+        Document doc = carregarDocumentXML(xmlFilePath);
+        NodeList cursNodes = doc.getElementsByTagName("curs");
+
+        for (int i = 0; i < cursNodes.getLength(); i++) {
+            Element curs = (Element) cursNodes.item(i);
+
+            if (idCurs.equals(curs.getAttribute("id"))) {
+                NodeList alumnesNodes = curs.getElementsByTagName("alumnes");
+                Element alumnesEl;
+
+                if (alumnesNodes.getLength() > 0) {
+                    alumnesEl = (Element) alumnesNodes.item(0);
+                } 
+                else {
+                    alumnesEl = doc.createElement("alumnes");
+                    curs.appendChild(alumnesEl);
+                }
+
+                Element nouAlumne = doc.createElement("alumne");
+                nouAlumne.setTextContent(nomAlumne);
+                alumnesEl.appendChild(nouAlumne);
+                guardarDocumentXML(doc);
+                break;
+            }
+        }
     }
 
     /**
@@ -211,7 +308,32 @@ public class PR132Main {
      * @param nomAlumne Nom de l'alumne a eliminar.
      */
     public void eliminarAlumne(String idCurs, String nomAlumne) {
-        // *************** CODI PRÀCTICA **********************/
+        Document doc = carregarDocumentXML(xmlFilePath);
+        NodeList cursNodes = doc.getElementsByTagName("curs");
+
+        for (int i = 0; i < cursNodes.getLength(); i++) {
+            Element curs = (Element) cursNodes.item(i);
+
+            if (idCurs.equals(curs.getAttribute("id"))) {
+                NodeList alumnesContainers = curs.getElementsByTagName("alumnes");
+
+                if (alumnesContainers.getLength() > 0) {
+                    Element alumnesEl = (Element) alumnesContainers.item(0);
+                    NodeList alumneNodes = alumnesEl.getElementsByTagName("alumne");
+
+                    for (int j = 0; j < alumneNodes.getLength(); j++) {
+                        Node node = alumneNodes.item(j);
+                        
+                        if (node.getTextContent().equals(nomAlumne)) {
+                            alumnesEl.removeChild(node);
+                            guardarDocumentXML(doc);
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+        }
     }
 
     /**

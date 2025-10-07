@@ -69,10 +69,8 @@ public class PR131Main {
      * Processa el document XML creant-lo, guardant-lo en un fitxer i comprovant el directori de sortida.
      * 
      * @param filename Nom del fitxer XML a guardar.
-     * @throws IOException 
-     * @throws TransformerException 
      */
-    public void processarFitxerXML(String filename) throws TransformerException, IOException {
+    public void processarFitxerXML(String filename) {
         if (comprovarIDirCrearDirectori(dataDir)) {
             Document doc = construirDocument();
             if (doc != null) {
@@ -165,7 +163,7 @@ public class PR131Main {
      * @param fitxerSortida Fitxer de sortida on es guardarà el document.
      * @throws IOException 
      */
-    private static void guardarDocument(Document doc, File fitxerSortida) throws TransformerException, IOException {
+    private static void guardarDocument(Document doc, File fitxerSortida) {
         // *************** CODI PRÀCTICA **********************/
         try {
             TransformerFactory tfrFactory = TransformerFactory.newInstance();
@@ -175,7 +173,7 @@ public class PR131Main {
             DOMSource src = new DOMSource(doc);
             StreamResult result = new StreamResult(fitxerSortida);
             transformer.transform(src, result);
-        } catch (Exception e) {
+        } catch (TransformerException e) {
             e.printStackTrace();
         }
     }
