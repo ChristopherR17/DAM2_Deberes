@@ -1,12 +1,13 @@
 package com.project.pr14;
 
 import com.project.objectes.Llibre;
-
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -51,7 +52,14 @@ public class PR14GestioLlibreriaJacksonMain {
      */
     public List<Llibre> carregarLlibres() {
         // *************** CODI PRÀCTICA **********************/
-        return null; // Substitueix pel teu
+        ObjectMapper om = new ObjectMapper();
+        try {
+            List<Llibre> llibres = om.readValue(dataFile, new TypeReference<List<Llibre>>() {});
+            return llibres;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
