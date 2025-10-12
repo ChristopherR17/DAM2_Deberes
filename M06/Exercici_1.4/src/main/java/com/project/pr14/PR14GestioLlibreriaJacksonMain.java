@@ -54,9 +54,8 @@ public class PR14GestioLlibreriaJacksonMain {
         // *************** CODI PRÀCTICA **********************/
         ObjectMapper om = new ObjectMapper();
         try {
-            List<Llibre> llibres = om.readValue(dataFile, new TypeReference<List<Llibre>>() {});
-            return llibres;
-        } catch (Exception e) {
+            return om.readValue(dataFile, new TypeReference<List<Llibre>>() {});
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
@@ -71,6 +70,12 @@ public class PR14GestioLlibreriaJacksonMain {
      */
     public void modificarAnyPublicacio(List<Llibre> llibres, int id, int nouAny) {
         // *************** CODI PRÀCTICA **********************/
+        for (Llibre l : llibres) {
+            if (l.getId() == id) {
+                l.setAny(nouAny);
+                break;
+            }
+        }
     }
 
     /**
@@ -81,6 +86,7 @@ public class PR14GestioLlibreriaJacksonMain {
      */
     public void afegirNouLlibre(List<Llibre> llibres, Llibre nouLlibre) {
         // *************** CODI PRÀCTICA **********************/
+        llibres.add(nouLlibre);
     }
 
     /**
@@ -91,6 +97,12 @@ public class PR14GestioLlibreriaJacksonMain {
      */
     public void esborrarLlibre(List<Llibre> llibres, int id) {
         // *************** CODI PRÀCTICA **********************/
+        for (int i = 0; i < llibres.size(); i++) {
+            if (llibres.get(i).getId() == id) {
+                llibres.remove(i);
+                break;
+            }
+        }
     }
 
     /**
@@ -99,6 +111,12 @@ public class PR14GestioLlibreriaJacksonMain {
      * @param llibres Llista de llibres a guardar.
      */
     public void guardarLlibres(List<Llibre> llibres) {
-        // *************** CODI PRÀCTICA **********************/        
+        // *************** CODI PRÀCTICA **********************/       
+        ObjectMapper om = new ObjectMapper();
+        try {
+            om.writerWithDefaultPrettyPrinter().writeValue(dataFile, llibres);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
     }
 }

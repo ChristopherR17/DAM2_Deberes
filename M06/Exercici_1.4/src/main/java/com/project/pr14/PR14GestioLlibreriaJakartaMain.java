@@ -1,10 +1,13 @@
 package com.project.pr14;
 
 import jakarta.json.*;
+import jakarta.json.stream.JsonGenerator;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -52,7 +55,26 @@ public class PR14GestioLlibreriaJakartaMain {
      */
     public List<Llibre> carregarLlibres() {
         // *************** CODI PRÀCTICA **********************/
-        return null; // Substitueix pel teu
+        List<Llibre> llibres = new ArrayList<>();
+        try (InputStream is = new FileInputStream(dataFile);
+             JsonReader reader = Json.createReader(is)) {
+
+            JsonArray jsonArray = reader.readArray();
+            for (JsonValue value : jsonArray) {
+                JsonObject obj = value.asJsonObject();
+                Llibre llibre = new Llibre(
+                        obj.getInt("id"),
+                        obj.getString("titol"),
+                        obj.getString("autor"),
+                        obj.getInt("any")
+                );
+                llibres.add(llibre);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return llibres;
     }
 
     /**
@@ -64,6 +86,12 @@ public class PR14GestioLlibreriaJakartaMain {
      */
     public void modificarAnyPublicacio(List<Llibre> llibres, int id, int nouAny) {
         // *************** CODI PRÀCTICA **********************/
+        for (Llibre llibre : llibres) {
+            if (llibre.getId() == id) {
+                llibre.setAny(nouAny);
+                break;
+            }
+        }
     }
 
     /**
@@ -74,6 +102,7 @@ public class PR14GestioLlibreriaJakartaMain {
      */
     public void afegirNouLlibre(List<Llibre> llibres, Llibre nouLlibre) {
         // *************** CODI PRÀCTICA **********************/
+        llibres.add(nouLlibre);
     }
 
     /**
@@ -84,6 +113,12 @@ public class PR14GestioLlibreriaJakartaMain {
      */
     public void esborrarLlibre(List<Llibre> llibres, int id) {
         // *************** CODI PRÀCTICA **********************/
+        for (int i = 0; i < llibres.size(); i++) {
+            if (llibres.get(i).getId() == id) {
+                llibres.remove(i);
+                break;
+            }
+        }
     }
 
     /**
@@ -93,5 +128,31 @@ public class PR14GestioLlibreriaJakartaMain {
      */
     public void guardarLlibres(List<Llibre> llibres) {
         // *************** CODI PRÀCTICA **********************/
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+        for (Llibre llibre : llibres) {
+            JsonObject obj = Json.createObjectBuilder()
+                    .add("id", llibre.getId())
+                    .add("titol", llibre.getTitol())
+                    .add("autor", llibre.getAutor())
+                    .add("any", llibre.getAny())
+                    .build();
+            arrayBuilder.add(obj);
+        }
+
+        JsonArray jsonArray = arrayBuilder.build();
+
+        // Escriu el resultat a un nou fitxer anomenat llibres_output_jakarta.json
+        File outputFile = new File(dataFile.getParent(), "llibres_output_jakarta.json");
+        try (OutputStream os = new FileOutputStream(outputFile);
+             JsonWriter writer = Json.createWriterFactory(
+                    Collections.singletonMap(JsonGenerator.PRETTY_PRINTING, true)
+             ).createWriter(os)) {
+
+            writer.writeArray(jsonArray);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
