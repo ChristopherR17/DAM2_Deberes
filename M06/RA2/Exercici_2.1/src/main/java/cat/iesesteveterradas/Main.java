@@ -1,31 +1,34 @@
 package cat.iesesteveterradas;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import cat.iesesteveterradas.dao.DatabaseConnection;
+import cat.iesesteveterradas.ui.Menu;
 
+/**
+ * Clase principal de la aplicación "For Honor Database Manager"
+ */
 public class Main {
-
+    
+    /**
+     * Método principal que inicia la aplicación
+     * @param args Argumentos de línea de comandos
+     */
     public static void main(String[] args) {
-        Path filePath = obtenirPathFitxer();
-
+        System.out.println("========================================");
+        System.out.println("  FOR HONOR DATABASE MANAGER");
+        System.out.println("========================================");
+        
         try {
-            List<String> lines = readFileContent(filePath);
-
-            // Imprimir les línies a la consola
-            lines.forEach(System.out::println);
-        } catch (IOException e) {
-            System.out.println("S'ha produït un error en llegir el fitxer: " + e.getMessage());
+            // Inicializar base de datos
+            System.out.println("Inicializando base de datos...");
+            DatabaseConnection.initDatabase();
+            
+            // Ejecutar menú principal
+            Menu menu = new Menu();
+            menu.mostrarMenu();
+            
+        } catch (Exception e) {
+            System.err.println("Error al iniciar la aplicación: " + e.getMessage());
+            e.printStackTrace();
         }
-    }
-
-    public static Path obtenirPathFitxer() {
-        return Paths.get(System.getProperty("user.dir"), "data", "bones_practiques_programacio.txt");
-    }
-
-    public static List<String> readFileContent(Path filePath) throws IOException {
-        return Files.readAllLines(filePath);
     }
 }

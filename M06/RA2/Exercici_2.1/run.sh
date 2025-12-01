@@ -1,37 +1,47 @@
 #!/bin/bash
 
-# run.sh
+# run.sh - Script corregido para ejecutar la aplicación For Honor
 
-# Change the working directory to where the script is located
+# Cambiar al directorio del script
 cd "$(dirname "$0")"
 
-# Set MAVEN_OPTS environment variable
+# Configurar opciones de Maven
 export MAVEN_OPTS="--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED"
 
-# Check for the first argument and set it as the main class
-mainClass="$1"
+# Clase principal por defecto
+DEFAULT_MAIN_CLASS="cat.iesesteveterradas.Main"
 
-echo "Setting MAVEN_OPTS to: $MAVEN_OPTS"
-echo "Main Class: $mainClass"
+# Usar la clase proporcionada o la por defecto
+if [ -z "$1" ]; then
+    MAIN_CLASS="$DEFAULT_MAIN_CLASS"
+    echo "Usando clase principal por defecto: $MAIN_CLASS"
+else
+    MAIN_CLASS="$1"
+    echo "Clase principal: $MAIN_CLASS"
+    shift  # Remover el primer argumento
+fi
 
-# Remove the first argument (mainClass) so the rest can be passed to Maven
-shift
+# Argumentos para Java (si los hay)
+JAVA_ARGS="$@"
 
-# Construct Maven argument for the main class
-mavenMainClassArg="-Dexec.mainClass=$mainClass"
+echo "========================================"
+echo "Configuración:"
+echo "========================================"
+echo "MAVEN_OPTS: $MAVEN_OPTS"
+echo "Clase principal: $MAIN_CLASS"
+echo "Argumentos Java: $JAVA_ARGS"
+echo "========================================"
 
-# Use "$@" to properly handle all arguments intended for the Java program
-javaArgs="$@"
+# Construir comando Maven
+MAVEN_CMD="mvn clean compile exec:java -Dexec.mainClass=\"$MAIN_CLASS\""
 
-# Join the arguments into a single string with proper escaping
-javaArgsStr=$(printf "%q " "$javaArgs")
+# Agregar argumentos Java si existen
+if [ -n "$JAVA_ARGS" ]; then
+    MAVEN_CMD="$MAVEN_CMD -Dexec.args=\"$JAVA_ARGS\""
+fi
 
-# Construct argument for passing additional args to Java program
-execArgsForJava="-Dexec.args=\"$javaArgsStr\""
+echo "Ejecutando: $MAVEN_CMD"
+echo "========================================"
 
-echo "Maven Main Class Argument: $mavenMainClassArg"
-echo "Java Program Arguments: $javaArgsStr"
-
-# Execute mvn command
-mvn clean clean compile test
-mvn exec:java $mavenMainClassArg $execArgsForJava
+# Ejecutar Maven
+eval $MAVEN_CMD
