@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.project.Ciutat" table="CIUTAT">
+        <id name="ciutatId" column="CIUTAT_ID">
+            <generator class="native"/>
+        </id>
+        <property name="nom" column="NOM" type="string" not-null="true"/>
+        <property name="pais" column="PAIS" type="string" not-null="true"/>
+        <property name="poblacio" column="POBLACIO" type="int"/>
+    </class>
+</hibernate-mapping>
