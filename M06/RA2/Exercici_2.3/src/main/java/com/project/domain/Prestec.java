@@ -5,15 +5,24 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 // TODO 1: @Entity
+@Entity
+@Table(name = "prestec")
 public class Prestec implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     // TODO 2: @Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long prestecId;
 
     // TODO 3: Relacions @ManyToOne (cap a Exemplar i Persona)
+    @ManyToOne
+    @JoinColumn(name = "exemplar_id")
     private Exemplar exemplar;
+
+    @ManyToOne
+    @JoinColumn(name = "persona_id")
     private Persona persona;
 
     private LocalDate dataPrestec;

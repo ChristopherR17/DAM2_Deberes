@@ -6,11 +6,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 // TODO 1: Afegir anotacions @Entity i @Table
+@Entity
+@Table(name = "llibre")
 public class Llibre implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     // TODO 2: @Id i @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long llibreId;
 
     private String isbn;
@@ -22,10 +26,17 @@ public class Llibre implements Serializable {
     // PISTA: Aquesta entitat és la "propietària" de la relació. 
     // Cal definir aquí el @JoinTable explícitament.
     // PISTA EXTRA: Fes servir fetch = FetchType.LAZY per eficiència.
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "llibre_autor",
+        joinColumns = @JoinColumn(name = "llibre_id"),
+        inverseJoinColumns = @JoinColumn(name = "autor_id")
+    )
     private Set<Autor> autors = new HashSet<>();
 
     // TODO 4: Relació OneToMany amb Exemplar.
     // PISTA: mappedBy = "llibre"
+    @OneToMany(mappedBy = "llibre", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Exemplar> exemplars = new HashSet<>();
 
     public Llibre() {}
