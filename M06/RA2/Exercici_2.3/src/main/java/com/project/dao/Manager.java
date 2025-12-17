@@ -405,8 +405,6 @@ public class Manager {
     public static List<Llibre> findLlibresAmbAutors() {
         try (Session session = factory.openSession()) {
             // TODO: Escriure la consulta HQL
-            // String hql = "SELECT DISTINCT l FROM Llibre l JOIN FETCH l.autors";
-            // return session.createQuery(hql, Llibre.class).list();
             String hql = "SELECT DISTINCT l FROM Llibre l JOIN FETCH l.autors";
             return session.createQuery(hql, Llibre.class).list();
         }
@@ -427,7 +425,8 @@ public class Manager {
             // TODO: Escriure la consulta HQL que retorni llibres en préstec actiu
             // Has de navegar: Prestec -> Exemplar -> Llibre per obtenir el títol
             // I també: Prestec -> Persona per obtenir el nom
-            return null;
+            String hql = "SELECT l.titol, p.persona.nom FROM Prestec p JOIN p.exemplar e JOIN e.llibre l WHERE p.actiu = true"; 
+            return session.createQuery(hql, Object[].class).list();
         }
     }
 
@@ -443,7 +442,8 @@ public class Manager {
     public static List<Object[]> findLlibresAmbBiblioteques() {
         try (Session session = factory.openSession()) {
             // TODO: Escriure la consulta HQL navegant des d'Exemplar
-            return null;
+            String hql = "SELECT e.llibre.titol, e.biblioteca.nom FROM Exemplar e";
+            return session.createQuery(hql, Object[].class).list();
         }
     }
 
