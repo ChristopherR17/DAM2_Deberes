@@ -1,0 +1,318 @@
+OBJECT Codeunit 50040 RA3_EA1_Pt4_Carrillo_Chris
+{
+  OBJECT-PROPERTIES
+  {
+    Date=;
+    Time=;
+    Modified=Yes;
+    Version List=;
+  }
+
+  PROPERTIES
+  {
+    OnRun=VAR
+            CR;
+            LF;
+            Menu;
+          BEGIN
+            // Carriage Return - (Hex $0D)
+            CR := 13;
+            // Line Feed - (Hex $0A)
+            LF := 10;
+            Menu := Window.InputBox('1: Decimal to any Base' + FORMAT(CR) + FORMAT(LF) +
+                                    '2: Factorial' + FORMAT(CR) + FORMAT(LF) +
+                                    '3: Fibonacci' + FORMAT(CR) + FORMAT(LF) +
+                                    '4: PrimalityChecker' + FORMAT(CR) + FORMAT(LF) +
+                                    '5: Master Mind',
+                                    'Options Menu',
+                                    'Introduce 1, 2, 3, 4 or 5',
+                                    100,
+                                    100);
+            CASE Menu OF
+              '1':
+                BEGIN
+                  DecimalToAnyBase();
+                END;
+              '2':
+                BEGIN
+                  Factorial();
+                END;
+              '3':
+                BEGIN
+                  Fibonacci();
+                END;
+              '4':
+                BEGIN
+                  PrimalityChecker();
+                END;
+              '5':
+                BEGIN
+                  MasterMind();
+                END;
+            END;
+          END;
+
+    TableNo=;
+  }
+
+  CODE
+  {
+    VAR
+      CR@1000000000 : Char;
+      LF@1000000001 : Char;
+      Menu@1000000002 : Text[30];
+      inputNumber@1000000003 : Integer;
+      factorialResult@1000000004 : Integer;
+      i@1000000005 : Integer;
+      fibonacciResult@1000000006 : Integer;
+      primalityResult@1000000007 : Boolean;
+      correctNumber@1000000008 : Integer;
+      playerWon@1000000009 : Boolean;
+      remainingAttemps@1000000010 : Integer;
+      triedNumber@1000000011 : Integer;
+      deadNumbers@1000000012 : Text[30];
+      woundedNumbers@1000000013 : Text[30];
+      decimalToBase2@1000000014 : Text[30];
+      decimalToBase8@1000000015 : Text[30];
+      decimalToBase16@1000000016 : Text[30];
+
+    LOCAL DecimalToAnyBase()
+    BEGIN
+      EVALUATE(inputNumber, Window.InputBox('AAAAAAA',
+                                            'Decimal to any Base',
+                                            'Introduce natural number (1, 2, 3, etc.)',
+                                            100,
+                                            100));
+      decimalToBase2 := DecimalToBaseN(inputNumber, 2);
+      decimalToBase8 := DecimalToBaseN(inputNumber, 8);
+      decimalToBase16 := DecimalToBaseN(inputNumber, 16);
+      Window.MsgBox('Original number (base = 10): ' + FORMAT(inputNumber) + FORMAT(CR) + FORMAT(LF) +
+                    'To base 2:  ' + decimalToBase2 + FORMAT(CR) + FORMAT(LF) +
+                    'To base 8:  ' + decimalToBase8 + FORMAT(CR) + FORMAT(LF) +
+                    'To base 16: ' + decimalToBase16,
+                    0,
+                    'Decimal to any Base');
+    END;
+
+    LOCAL Factorial()
+    BEGIN
+      EVALUATE(inputNumber, Window.InputBox('Write your number',
+                                            'Factorial',
+                                            'Introduce natural number (0, 1, 2, 3, etc.)',
+                                            100,
+                                            100));
+      factorialResult := 1;
+      IF inputNumber > 1 THEN BEGIN
+        FOR i := inputNumber DOWNTO 1 DO BEGIN
+          factorialResult := factorialResult * i;
+        END;
+      END;
+      Window.MsgBox('Original number: ' + FORMAT(inputNumber) + FORMAT(CR) + FORMAT(LF) +
+                    'Factorial (' + FORMAT(inputNumber) + '!): ' + FORMAT(factorialResult),
+                    0,
+                    'Factorial');
+    END;
+
+    LOCAL Fibonacci()
+    BEGIN
+      EVALUATE(inputNumber, Window.InputBox('Write your number',
+                                            'Fibonacci',
+                                            'Introduce natural number (0, 1, 2, 3, etc.)',
+                                            100,
+                                            100));
+      fibonacciResult := CalculateFibonacci(inputNumber);
+      Window.MsgBox('Original number: ' + FORMAT(inputNumber) + FORMAT(CR) + FORMAT(LF) +
+                    'Fibonacci(n=' + FORMAT(inputNumber) + '): ' + FORMAT(fibonacciResult),
+                    0,
+                    'Fibonacci');
+    END;
+
+    LOCAL PrimalityChecker()
+    BEGIN
+      EVALUATE(inputNumber, Window.InputBox('Write your number',
+                                            'Primality Checker',
+                                            'Introduce natural number (2, 3, 4, etc.)',
+                                            100,
+                                            100));
+      primalityResult := isPrime(inputNumber);
+      Window.MsgBox('Original number: ' + FORMAT(inputNumber) + FORMAT(CR) + FORMAT(LF) +
+                    'Is the number ' + FORMAT(inputNumber) + ' prime?: ' + FORMAT(primalityResult),
+                    0,
+                    'Primality Checker');
+    END;
+
+    LOCAL MasterMind()
+    VAR
+      inputNumber@1000000003 : Integer;
+    BEGIN
+      // Obtener número original de 4 cifras
+      EVALUATE(correctNumber, Window.InputBox('Write your 4 digits number',
+                                              'Master Mind',
+                                              'Introduce 4 digits number (example: 1234)',
+                                              100,
+                                              100));
+
+      // Main loop
+      playerWon := FALSE;
+      remainingAttemps := 8;
+      WHILE remainingAttemps > 0 DO BEGIN
+        EVALUATE(triedNumber, Window.InputBox('Try to guess the 4 digits number (' + FORMAT(remainingAttemps) + ' remaining attemps)',
+                                              'Master Mind',
+                                              'Introduce 4 digits number (example: 1234)',
+                                              100,
+                                              100));
+        IF triedNumber = correctNumber THEN BEGIN
+          playerWon := TRUE;
+          BREAK;
+        END;
+        deadNumbers := CalculateDeadNumbers(correctNumber, triedNumber);
+        woundedNumbers := CalculateWoundedNumbers(correctNumber, triedNumber);
+        remainingAttemps := remainingAttemps - 1;
+        Window.MsgBox('Your number: ' + FORMAT(triedNumber) + FORMAT(CR) + FORMAT(LF) +
+                      'Dead numbers (correct value AND position): ' + deadNumbers + FORMAT(CR) + FORMAT(LF) +
+                      'Wounded numbers (correct value but NOT position): ' + woundedNumbers,
+                      0,
+                      'Master Mind');
+      END;
+
+      // Mensaje final
+      IF playerWon THEN
+        Window.MsgBox('You won! Congratulations', 0, 'Master Mind')
+      ELSE
+        Window.MsgBox('No tries left...You lose!', 0, 'Master Mind');
+    END;
+
+    LOCAL DecimalToBaseN(inputNumber@1000000000 : Integer;baseN@1000000001 : Integer) numberInBaseN@1000000002 : Text[30]
+    VAR
+      currentDiv@1000000003 : Integer;
+      currentMod@1000000004 : Integer;
+      currentChar@1000000005 : Text[1];
+      currentNumberInBaseN@1000000006 : Text[30];
+      result@1000000007 : Text[30];
+      i@1000000008 : Integer;
+    BEGIN
+      // Construir número en base N (al revés) usando división entera y módulo
+      currentDiv := inputNumber;
+      currentMod := 0;
+      currentChar := '';
+      currentNumberInBaseN := '';
+      WHILE currentDiv > 0 DO BEGIN
+        currentMod := currentDiv MOD baseN;
+        CASE currentMod OF
+          0:
+            currentChar := '0';
+          1:
+            currentChar := '1';
+          2:
+            currentChar := '2';
+          3:
+            currentChar := '3';
+          4:
+            currentChar := '4';
+          5:
+            currentChar := '5';
+          6:
+            currentChar := '6';
+          7:
+            currentChar := '7';
+          8:
+            currentChar := '8';
+          9:
+            currentChar := '9';
+          10:
+            currentChar := 'A';
+          11:
+            currentChar := 'B';
+          12:
+            currentChar := 'C';
+          13:
+            currentChar := 'D';
+          14:
+            currentChar := 'E';
+          15:
+            currentChar := 'F';
+        END;
+        currentDiv := currentDiv DIV baseN;
+        currentNumberInBaseN := currentNumberInBaseN + currentChar;
+      END;
+
+      // Preparar resultado final invirtiendo resultado anterior
+      result := '';
+      FOR i := STRLEN(currentNumberInBaseN) DOWNTO 1 DO BEGIN
+        result := result + COPYSTR(currentNumberInBaseN, i, 1);
+      END;
+      numberInBaseN := result;
+    END;
+
+    LOCAL CalculateFibonacci(n@1000000000 : Integer) result@1000000001 : Integer
+    BEGIN
+      IF n = 0 THEN
+        result := 0
+      ELSE IF n = 1 THEN
+        result := 1
+      ELSE
+        result := CalculateFibonacci(n - 1) + CalculateFibonacci(n - 2);
+    END;
+
+    LOCAL isPrime(n@1000000000 : Integer) result@1000000001 : Boolean
+    VAR
+      i@1000000002 : Integer;
+    BEGIN
+      result := TRUE;
+      IF n > 1 THEN BEGIN
+        FOR i := 2 TO n - 1 DO BEGIN
+          IF n MOD i = 0 THEN BEGIN
+            result := FALSE;
+            BREAK;
+          END;
+        END;
+      END;
+    END;
+
+    LOCAL CalculateDeadNumbers(correctNumber@1000000000 : Integer;triedNumber@1000000001 : Integer) deadNumbers@1000000002 : Text[30]
+    VAR
+      i@1000000003 : Integer;
+      digitCorrectNumber@1000000004 : Text[1];
+      digitTriedNumber@1000000005 : Text[1];
+      isDigitCorrect@1000000006 : Boolean;
+      isDigitAlreadyRegistered@1000000007 : Boolean;
+    BEGIN
+      FOR i := 1 TO 4 DO BEGIN
+        digitCorrectNumber := COPYSTR(FORMAT(correctNumber), i, 1);
+        digitTriedNumber := COPYSTR(FORMAT(triedNumber), i, 1);
+        isDigitCorrect := digitCorrectNumber = digitTriedNumber;
+        isDigitAlreadyRegistered := STRPOS(deadNumbers, digitCorrectNumber) > 0;
+        IF isDigitCorrect AND NOT isDigitAlreadyRegistered THEN
+          deadNumbers := deadNumbers + digitCorrectNumber;
+      END;
+      IF STRLEN(deadNumbers) = 0 THEN deadNumbers := 'None';
+    END;
+
+    LOCAL CalculateWoundedNumbers(correctNumber@1000000000 : Integer;triedNumber@1000000001 : Integer) woundedNumbers@1000000002 : Text[30]
+    VAR
+      i@1000000003 : Integer;
+      j@1000000004 : Integer;
+      digitCorrectNumber@1000000005 : Text[1];
+      digitTriedNumber@1000000006 : Text[1];
+      isDigitCorrect@1000000007 : Boolean;
+      isDigitAlreadyRegistered@1000000008 : Boolean;
+    BEGIN
+      FOR i := 1 TO 4 DO BEGIN
+        FOR j := 1 TO 4 DO BEGIN
+          IF i <> j THEN BEGIN
+            digitCorrectNumber := COPYSTR(FORMAT(correctNumber), i, 1);
+            digitTriedNumber := COPYSTR(FORMAT(triedNumber), j, 1);
+            isDigitCorrect := digitCorrectNumber = digitTriedNumber;
+            isDigitAlreadyRegistered := STRPOS(woundedNumbers, digitCorrectNumber) > 0;
+            IF isDigitCorrect AND NOT isDigitAlreadyRegistered THEN
+              woundedNumbers := woundedNumbers + digitCorrectNumber;
+          END;
+        END;
+      END;
+      IF STRLEN(woundedNumbers) = 0 THEN woundedNumbers := 'None';
+    END;
+
+    BEGIN
+    END.
+  }
+}
