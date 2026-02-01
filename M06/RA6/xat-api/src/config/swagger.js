@@ -20,33 +20,4 @@ const swaggerOptions = {
 
 module.exports = swaggerJsDoc(swaggerOptions);
 
-/**
- * @swagger
- * /api/chat/sentiment-analysis:
- *   post:
- *     summary: Analyze text sentiment
- *     tags: [Chat]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - text
- *               - userId
- *             properties:
- *               text:
- *                 type: string
- *               userId:
- *                 type: string
- *               sessionId:
- *                 type: string
- *               language:
- *                 type: string
- *     responses:
- *       200:
- *         description: Sentiment analysis result
- *       400:
- *         description: Invalid input
- */
+
