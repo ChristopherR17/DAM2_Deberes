@@ -2,6 +2,7 @@
 const csv = require('csv-parser');
 const fs = require('fs');
 const path = require('path');
+const { json } = require('stream/consumers');
 require('dotenv').config();
 
 // Constants
@@ -94,26 +95,46 @@ async function main() {
         const games = await readCSV(gamesFilePath);
         const reviews = await readCSV(reviewsFilePath);
 
-        // Iterem pels jocs
-        console.log('\n=== Llista de Jocs ===');
-        for (const game of games) {
-            console.log(`Codi: ${game.appid}, Nom: ${game.name}`);
+        const selectedGames = games.slice(0,2);
+        const output = {
+            timestamp: new Date().toISOString(),
+            games: []
+        };
+
+        for (const game of selectedGames){
+            console.log(`\nProcessant joc: ${game.name}`)
+
+            const stats = {
+                positive: 0,
+                negative: 0,
+                neutral: 0,
+                error: 0
+            }
+
+            const gameReviews = reviews.filter(r => r.app_id === game.appid).slice(0,2);
+
+            for (const review of gameReviews){
+                const sentiment = await analyzeSentiment(review.content);
+                
+                if (stats.hasOwnProperty(sentiment)) {
+                    stats[sentiment]++;
+                } else {
+                    stats.error++;
+                }
+            }
+
+            output.games.push({
+                appid: game.appid,
+                name: game.name,
+                statistics: stats
+            });
         }
 
-        // Iterem per les primeres 10 reviews i analitzem el sentiment
-        console.log('\n=== Anàlisi de Sentiment de Reviews ===');
-        const reviewsToAnalyze = reviews.slice(0, 2);
-        
-        for (const review of reviewsToAnalyze) {
-            console.log(`\nProcessant review: ${review.id}`);
-            const sentiment = await analyzeSentiment(review.content);
-            console.log(`Review ID: ${review.id}`);
-            console.log(`Joc ID: ${review.app_id}`);
-            console.log(`Contingut: ${review.content.substring(0, 100)}...`);
-            console.log(`Sentiment (Ollama): ${sentiment}`);
-            console.log('------------------------');
-        }
-        console.log(`\nNOMÉS AVALUEM LES DUES PRIMERES REVIEWS`);
+        const outputPath = path.join(__dirname, dataPath, 'exercici2_resposta.json');
+        fs.writeFileSync(outputPath, JSON.stringify(output, null, 2), 'utf-8');
+
+        console.log('\nFitxer exercici2_resposta.json creat correctament');
+
      } catch (error) {
         console.error('Error durant l\'execució:', error.message);
     }
