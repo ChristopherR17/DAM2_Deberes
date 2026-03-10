@@ -1,0 +1,11 @@
+2026-03-10T17:25:19.822Z [INFO]: Iniciant exercici 1
+2026-03-10T17:25:19.850Z [INFO]: Connectat a MongoDB correctament
+2026-03-10T17:25:19.853Z [INFO]: Llegint fitxer: ./data/Posts.xml
+2026-03-10T17:25:19.897Z [INFO]: Trobats 228 registres totals al fitxer XML
+2026-03-10T17:25:19.900Z [INFO]: Filtrades 71 preguntes (PostTypeId=1)
+2026-03-10T17:25:19.901Z [INFO]: Seleccionades les 71 preguntes amb més visualitzacions
+2026-03-10T17:25:19.901Z [INFO]: Inserint 71 documents a MongoDB...
+2026-03-10T17:25:19.923Z [INFO]: Inserides 71 preguntes a MongoDB
+2026-03-10T17:25:19.926Z [INFO]: Total de documents a la col·lecció: 71
+2026-03-10T17:25:19.927Z [INFO]: Connexió a MongoDB tancada
+2026-03-10T17:25:19.928Z [INFO]: Exercici 1 completat
