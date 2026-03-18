@@ -1,0 +1,23 @@
+{
+  "name": "exercici_3.1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:server": "node websocket_server.js",
+    "start:client": "node websocket_client.js",
+    "dev:server": "nodemon websocket_server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "entities": "^7.0.1",
+    "mongodb": "^7.1.0",
+    "pdfkit": "^0.17.2",
+    "winston": "^3.19.0",
+    "ws": "^8.19.0",
+    "xml2js": "^0.6.2"
+  }
+}
