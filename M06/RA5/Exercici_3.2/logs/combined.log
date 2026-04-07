@@ -22,3 +22,27 @@
 {"duration":"15.74s","level":"info","message":"⏰ Finalitzant sessió per inactivitat","playerId":"player_705","service":"game-server","sessionId":"3822300f-c161-4b38-8d82-3c5a4a566f38","timestamp":"2026-04-07 18:54:56","totalMovements":61}
 {"distance":39.6,"endPos":"(32, -23)","level":"info","message":"📤 Missatge GAME_OVER enviat al client","service":"game-server","startPos":"(4, 5)","timestamp":"2026-04-07 18:54:56"}
 {"code":1005,"level":"info","message":"🔴 Client desconnectat","reason":"","service":"game-server","timestamp":"2026-04-07 18:54:59"}
+{"level":"info","message":"Iniciant servidor WebSocket...","service":"game-server","timestamp":"2026-04-07 19:12:47"}
+{"level":"info","message":"Intentant connectar a MongoDB...","service":"game-server","timestamp":"2026-04-07 19:12:47"}
+{"level":"info","message":"Connectat a MongoDB correctament","service":"game-server","timestamp":"2026-04-07 19:12:47"}
+{"level":"info","message":"Col·lecció 'movements' preparada a la BD 'game_db'","service":"game-server","timestamp":"2026-04-07 19:12:47"}
+{"level":"info","message":"Servidor WebSocket escoltant a ws://localhost:8080","service":"game-server","timestamp":"2026-04-07 19:12:47"}
+{"level":"info","message":"Límit d'inactivitat: 10 segons","service":"game-server","timestamp":"2026-04-07 19:12:47"}
+{"level":"info","message":"Nou client connectat desde ::ffff:127.0.0.1","service":"game-server","timestamp":"2026-04-07 19:12:54"}
+{"level":"info","message":"Nova sessió iniciada","playerId":"player_717","service":"game-server","sessionId":"d72692b0-9219-4c8d-abad-a0f1dd8ce8d0","startTime":"2026-04-07T17:13:01.251Z","timestamp":"2026-04-07 19:13:01"}
+{"level":"info","message":"Nou jugador registrat: player_717","service":"game-server","timestamp":"2026-04-07 19:13:01"}
+{"code":1005,"level":"info","message":"Client desconnectat","reason":"","service":"game-server","timestamp":"2026-04-07 19:13:10"}
+{"level":"info","message":"Finalitzant sessió per desconnexió: player_717","service":"game-server","timestamp":"2026-04-07 19:13:10"}
+{"duration":"9.59s","level":"info","message":"Finalitzant sessió per inactivitat","playerId":"player_717","service":"game-server","sessionId":"d72692b0-9219-4c8d-abad-a0f1dd8ce8d0","timestamp":"2026-04-07 19:13:10","totalMovements":54}
+{"level":"info","message":"Nou client connectat desde ::ffff:127.0.0.1","service":"game-server","timestamp":"2026-04-07 19:13:14"}
+{"level":"info","message":"Nova sessió iniciada","playerId":"player_218","service":"game-server","sessionId":"d1d12539-49c8-4b91-ba4b-a486b48526a6","startTime":"2026-04-07T17:13:16.064Z","timestamp":"2026-04-07 19:13:16"}
+{"level":"info","message":"Nou jugador registrat: player_218","service":"game-server","timestamp":"2026-04-07 19:13:16"}
+{"duration":"11.68s","level":"info","message":"Finalitzant sessió per inactivitat","playerId":"player_218","service":"game-server","sessionId":"d1d12539-49c8-4b91-ba4b-a486b48526a6","timestamp":"2026-04-07 19:13:27","totalMovements":28}
+{"distance":24.02,"endPos":"(25, -1)","level":"info","message":"Missatge GAME_OVER enviat al client","service":"game-server","startPos":"(1, 0)","timestamp":"2026-04-07 19:13:27"}
+{"code":1005,"level":"info","message":"Client desconnectat","reason":"","service":"game-server","timestamp":"2026-04-07 19:13:34"}
+{"level":"info","message":"Nou client connectat desde ::ffff:127.0.0.1","service":"game-server","timestamp":"2026-04-07 19:15:51"}
+{"level":"info","message":"Nova sessió iniciada","playerId":"player_838","service":"game-server","sessionId":"41446122-2dc8-401d-af4a-c384de6a1a6a","startTime":"2026-04-07T17:15:54.088Z","timestamp":"2026-04-07 19:15:54"}
+{"level":"info","message":"Nou jugador registrat: player_838","service":"game-server","timestamp":"2026-04-07 19:15:54"}
+{"duration":"11.85s","level":"info","message":"Finalitzant sessió per inactivitat","playerId":"player_838","service":"game-server","sessionId":"41446122-2dc8-401d-af4a-c384de6a1a6a","timestamp":"2026-04-07 19:16:05","totalMovements":11}
+{"distance":7.07,"endPos":"(5, -6)","level":"info","message":"Missatge GAME_OVER enviat al client","service":"game-server","startPos":"(0, -1)","timestamp":"2026-04-07 19:16:05"}
+{"code":1005,"level":"info","message":"Client desconnectat","reason":"","service":"game-server","timestamp":"2026-04-07 19:16:13"}

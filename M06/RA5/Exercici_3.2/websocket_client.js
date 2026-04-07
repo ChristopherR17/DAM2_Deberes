@@ -19,7 +19,7 @@ function connectToServer() {
   ws = new WebSocket(SERVER_URL);
   
   ws.on('open', () => {
-    console.log(`\n🟢 Connectat al servidor com a ${PLAYER_ID}`);
+    console.log(`\nConnectat al servidor com a ${PLAYER_ID}`);
     console.log('Utilitza les fletxes per moure el jugador');
     console.log('Prem "q" per sortir\n');
     console.log(`Posició actual: (${currentPosition.x}, ${currentPosition.y})`);
@@ -30,10 +30,10 @@ function connectToServer() {
       const message = JSON.parse(data.toString());
       
       if (message.type === 'GAME_OVER') {
-        console.log('\n🔴 FINAL DE PARTIDA');
-        console.log(`📏 Distància recorreguda: ${message.distance}`);
-        console.log(`📍 Inici: (${message.startPosition.x}, ${message.startPosition.y})`);
-        console.log(`🏁 Final: (${message.endPosition.x}, ${message.endPosition.y})`);
+        console.log('\nFINAL DE PARTIDA');
+        console.log(`Distància recorreguda: ${message.distance}`);
+        console.log(`Inici: (${message.startPosition.x}, ${message.startPosition.y})`);
+        console.log(`Final: (${message.endPosition.x}, ${message.endPosition.y})`);
         console.log('\nMou una fletxa per iniciar nova partida...\n');
         
         sessionActive = false;
@@ -44,7 +44,7 @@ function connectToServer() {
   });
   
   ws.on('close', () => {
-    console.log('🔴 Desconnectat del servidor');
+    console.log('Desconnectat del servidor');
     process.exit(0);
   });
   
@@ -66,10 +66,10 @@ function sendPosition() {
     
     if (!sessionActive) {
       sessionActive = true;
-      console.log('🟢 Nova partida iniciada!');
+      console.log('Nova partida iniciada!');
     }
     
-    console.log(`📤 Posició enviada: (${currentPosition.x}, ${currentPosition.y})`);
+    console.log(`Posició enviada: (${currentPosition.x}, ${currentPosition.y})`);
   }
 }
 
@@ -105,11 +105,11 @@ process.stdin.on('keypress', (str, key) => {
   }
   
   if (moved) {
-    console.log(`📍 Nova posició: (${currentPosition.x}, ${currentPosition.y})`);
+    console.log(`Nova posició: (${currentPosition.x}, ${currentPosition.y})`);
     sendPosition();
   }
 });
 
 // Iniciar client
-console.log('🎮 Client de joc 2D');
+console.log('Client de joc 2D');
 connectToServer();
