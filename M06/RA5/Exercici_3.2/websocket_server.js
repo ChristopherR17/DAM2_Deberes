@@ -12,10 +12,10 @@ const crypto = require('crypto');
 // CONFIGURACIÓ
 // ============================================
 const PORT = 8080;
-const MONGO_URI = 'mongodb://localhost:27017';
+const MONGO_URI = 'mongodb://root:password@localhost:27017';
 const DB_NAME = 'game_db';
 const COLLECTION_NAME = 'movements';
-const INACTIVITY_LIMIT = 10000; // 10 segons en milisegons
+const INACTIVITY_LIMIT = 10000; //milisegundos -> 10s
 
 // ============================================
 // CONFIGURACIÓ DE WINSTON (LOGS)
@@ -135,7 +135,7 @@ async function saveMovement(movementData) {
     // Afegir timestamp del servidor i ID únic
     const documentToSave = {
       ...movementData,
-      _id: new crypto.randomUUID(), // ID únic per al document
+      _id: crypto.randomUUID(), // ID únic per al document
       serverTimestamp: new Date(),
       serverTimestampEpoch: Date.now()
     };
