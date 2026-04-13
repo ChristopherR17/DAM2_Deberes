@@ -1,8 +1,7 @@
--NintendoDB -> DONE
+
 -Xat IETI -> Progress
 -Sincronització -> DONE
 -Joc JS cmd -> DONE
--Joc Dart cmd(Buscamines) -> DONE
 -DB Tematica FTR -> None
 -Custom Widget -> None
 -Encriptacio -> Progress
