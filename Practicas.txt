@@ -1,9 +1,9 @@
 
--Xat IETI -> Progress
+-Xat IETI -> DONE
 -Sincronització -> DONE
 -Joc JS cmd -> DONE
 -DB Tematica FTR -> None
--Custom Widget -> None
--Encriptacio -> Progress
+-Custom Widget -> DONE
+-Encriptacio -> DONE
 -BattleRoyale -> None
--Custom Calls -> None 
+-Custom Calls -> DONE 
